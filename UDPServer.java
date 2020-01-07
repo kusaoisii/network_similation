@@ -7,8 +7,8 @@ public class UDPServer {
         throws Exception {
           byte[] sendBuffer = "Broadcast message was received".getBytes();
           byte receiveBuffer[] = new byte[1024];
-          String b_address="127.0.0.1";
-          int cn=0; // client number
+          String b_address="";
+          int cn = 0; // client number
           int i=1; // counter for clients
 
           if (argv.length!=2){
@@ -18,6 +18,7 @@ public class UDPServer {
           } else {
             b_address=argv[0]; // broadcast address
             cn=Integer.parseInt(argv[1]); // the number of clients
+
           }
 
           try{
@@ -46,9 +47,11 @@ public class UDPServer {
                 DatagramPacket receivePacket =
                     new DatagramPacket(receiveBuffer,receiveBuffer.length);
                 DatagramSocket receiveSocket = new DatagramSocket(49513+i);
-                receiveSocket.setSoTimeout( 1000 ); // timeout in [ms].
+                receiveSocket.setSoTimeout( 10000 ); // timeout in [ms].
                 // Receive the ack from a client.
-                ClientSocket.receive(receivePacket);
+                receiveSocket.receive(receivePacket);
+
+                
 
                 // If the server successfully received the ack,
                 // then display it with the hostname and close the corresponding socket.
@@ -64,9 +67,10 @@ public class UDPServer {
                 ClientSocket.close(); // close the socket
                 break;
               }
-              i=1;
+              i = 1;
           }
         } catch (Exception ignored){
+          System.out.println(ignored);
         }
     }
 }

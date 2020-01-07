@@ -47,9 +47,7 @@ public class UDPClient {
           // write a code here to send an ack to the server.
           DatagramPacket sendPacket =
               new DatagramPacket(sendBuffer,sendBuffer.length,serverAddress);
-          serverSocket.send(sendPacket);;
-          receiveSocket.close();
-          serverSocket.close();
+          serverSocket.send(sendPacket);
         }
 
 
